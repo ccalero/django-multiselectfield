@@ -15,12 +15,13 @@
 # along with this software.  If not, see <https://www.gnu.org/licenses/>.
 
 from django import VERSION
+from django import forms
 from django.core.exceptions import ValidationError
 from django.forms.models import modelform_factory
 from django.test import TestCase
 
-from multiselectfield.utils import get_max_length
 from multiselectfield.forms.fields import MultiSelectFormField
+from multiselectfield.utils import get_max_length
 
 from .models import TAGS_CHOICES, Book, PROVINCES, STATES, PROVINCES_AND_STATES, ONE, TWO
 
@@ -199,3 +200,20 @@ class MultiSelectUtilsTestCase(TestCase):
             ('key3', 'value3'),
         ]
         self.assertEqual(get_max_length(choices, None), 14)
+
+
+class TestFormWithMultiSelectField(forms.Form):
+    CHOICES = (
+        ('a', 'A'),
+        ('b', 'B'),
+    )
+    reason = MultiSelectFormField(choices=CHOICES, widget=forms.CheckboxSelectMultiple, required=False)
+
+
+class MultiSelectFormFieldTestCase(TestCase):
+    def test_multiselectformfield_without_flat_choices(self):
+        """Test that MultiSelectFormField works when used directly in a Form without flat_choices."""
+        try:
+            TestFormWithMultiSelectField()
+        except KeyError as e:
+            self.fail(f"MultiSelectFormField raised KeyError: {e}")
