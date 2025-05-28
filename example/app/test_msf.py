@@ -20,6 +20,7 @@ from django.forms.models import modelform_factory
 from django.test import TestCase
 
 from multiselectfield.utils import get_max_length
+from multiselectfield.forms.fields import MultiSelectFormField
 
 from .models import TAGS_CHOICES, Book, PROVINCES, STATES, PROVINCES_AND_STATES, ONE, TWO
 
@@ -204,7 +205,7 @@ class MultiSelectTestCase(TestCase):
 
             self.assertEqual(form_field.choices, TAGS_CHOICES)
             self.assertEqual(form_field_from_form.choices, TAGS_CHOICES)
-            
+
 
 class MultiSelectUtilsTestCase(TestCase):
     def test_get_max_length_max_length_is_not_none(self):
