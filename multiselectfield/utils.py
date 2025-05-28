@@ -40,12 +40,8 @@ class MSFList(list):
         super(MSFList, self).__init__(*args, **kwargs)
 
     def __str__(self):
-        msg_list = [
-            self.choices.get(int(i)) if i.isdigit() else self.choices.get(i)
-            for i in self]
-
-        value = ', '.join(str(s) for s in msg_list)
-        return value
+        msg_list = [self.choices.get(i, i) for i in self]
+        return ', '.join(str(v) for v in msg_list if v is not None)
 
     if VERSION >= (4, 2):
         def resolve_expression(
@@ -56,7 +52,6 @@ class MSFList(list):
                 result = _FakeSqlVal(self)
             else:
                 result = list(self)
-
             return result
 
 
