@@ -19,9 +19,11 @@ from django import forms
 from ..utils import MSFList, get_max_length
 from ..validators import MaxValueMultiFieldValidator, MinChoicesValidator, MaxChoicesValidator
 
+from .widgets import MultiSelectCheckboxSelectMultiple
+
 
 class MultiSelectFormField(forms.MultipleChoiceField):
-    widget = forms.CheckboxSelectMultiple
+    widget = MultiSelectCheckboxSelectMultiple
 
     def __init__(self, *args, **kwargs):
         self.min_choices = kwargs.pop('min_choices', None)

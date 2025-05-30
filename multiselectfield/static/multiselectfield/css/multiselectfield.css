@@ -1,0 +1,5 @@
+
+.form-row label input[type="checkbox"].multiselectfield {
+    vertical-align: bottom;
+    margin: 3px 0;
+}
